@@ -1,3 +1,4 @@
+//remove file, replace with sonic model
 import { DataTypes } from "sequelize";
 import sequelize from "../db/connection.js";
 
