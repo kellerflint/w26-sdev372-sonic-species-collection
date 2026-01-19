@@ -13,7 +13,7 @@ app.get("/api/test", async (req, res) => {
     res.json({ message: "API working" });
 });
 
-const PORT = process.env.DB_PORT || 3001;
+const PORT = 3001;
 
 app.listen(PORT, async () => {
     console.log(`API running on port ${PORT}`)
