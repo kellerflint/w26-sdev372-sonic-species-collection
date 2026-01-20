@@ -5,9 +5,9 @@ export default function SpeciesDropdown() {
     const [selected, setSelected] = useState("")
 
     useEffect(() => {
-        fetch("http://localhost:3001/api/species")
-        .then(res => res.json())
-        .then(data => setSpecies(data))
+        fetch("http://localhost:3001/api/all")
+            .then(res => res.json())
+            .then(data => setSpecies(data))
     }, [])
 
     return (
@@ -19,7 +19,7 @@ export default function SpeciesDropdown() {
             >
                 <option value=""> choose one </option>
                 {species.map(specie => (
-                    <option value={specie.name}>{specie.name}</option>
+                    <option key={specie.name} value={specie.name}>{specie.name}</option>
                 ))}
             </select>
         </>
