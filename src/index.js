@@ -10,10 +10,12 @@ app.use(express.json());
 
 // Test route 
 app.get("/api/test", async (req, res) => {
+    console.log("working");
     res.json({ message: "API working" });
+
 });
 
-const PORT = process.env.DB_PORT || 3001;
+const PORT = process.env.API_PORT || 3001;
 
 app.listen(PORT, async () => {
     console.log(`API running on port ${PORT}`)
