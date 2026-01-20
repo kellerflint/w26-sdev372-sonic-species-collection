@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import sequelize from "./db/connection.js";
-import Test from "./models/testModel.js";
+import schema from "./models/species.schema.js";
 
 const app = express();
 
@@ -14,6 +14,12 @@ app.get("/api/test", async (req, res) => {
     res.json({ message: "API working" });
 
 });
+
+app.get("/api/all", async (req, res) => {
+    const species = await schema.findAll();
+    res.json(species);
+    console.log("Species returned");
+})
 
 const PORT = process.env.API_PORT || 3001;
 
