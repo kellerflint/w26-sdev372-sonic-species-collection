@@ -4,8 +4,9 @@ By: Brady & Gabby
 **Name:** Sonic Species Collection  
 **Tagline:** The total *unofficial* collection of traits of every species in the Sonic series  
 
-**To-Do:** - Add traits to database
-- Make call to database to display traits of species using the dropdown
+**To-Do:** 
+- Add traits to database
+- Make call to database to display traits of species using the dropdown  
 [Trait list](https://github.com/Gabby-Moon/w26-sdev372-sonic-species-collection/blob/main/NOTES.md)
 
 ---
