@@ -22,7 +22,7 @@ app.get("/api/all", async (req, res) => {
 })
 
 app.get("/api/name", async (req, res) => {
-    const name = req.query.name
+    const { name } = req.query;
 
     const data = await schema.findAll({
         where: { name }

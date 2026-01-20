@@ -19,9 +19,10 @@ export default function SpeciesDropdown() {
             >
                 <option value=""> choose one </option>
                 {species.map(specie => (
-                    <option key={specie.name} value={specie.name}>{specie.name}</option>
+                    <option key={specie.id} value={specie.name}>{specie.name}</option>
                 ))}
             </select>
+            <h4>Currently Selected: {selected}</h4>
         </>
     )
 }
