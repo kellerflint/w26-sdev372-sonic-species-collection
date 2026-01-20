@@ -4,6 +4,10 @@ By: Brady & Gabby
 **Name:** Sonic Species Collection  
 **Tagline:** The total *unofficial* collection of traits of every species in the Sonic series  
 
+**To-Do:** Add traits to database
+Make call to database to display traits of species using the dropdown
+[Trait list](https://github.com/Gabby-Moon/w26-sdev372-sonic-species-collection/blob/main/NOTES.md)
+
 ---
 
 **Problem Statement:** What traits do each of the species in the Sonic series have? How can I make a fan-character look accurate to it's species if I can't find *official* references among all the other fan-characters? Are there *official* characters that are (Species Name)?  
