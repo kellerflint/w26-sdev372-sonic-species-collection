@@ -12,7 +12,7 @@ export default function SpeciesDropdown() {
 
     return (
         <>
-            <label>Species:</label>
+            <label id="searchLabel">Species:</label>
             <select
                 value={selected}
                 onChange={(e) => setSelected(e.target.value)}
@@ -22,7 +22,7 @@ export default function SpeciesDropdown() {
                     <option key={specie.id} value={specie.name}>{specie.name}</option>
                 ))}
             </select>
-            <h4>Currently Selected: {selected}</h4>
+            <h4 id="selectDisplay">Currently Selected: {selected}</h4>
         </>
     )
 }
