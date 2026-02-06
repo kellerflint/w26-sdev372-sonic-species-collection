@@ -125,5 +125,6 @@ Server:
 ```bash
 cd server
 npm install
+npm run seed
 npm run dev
 ```
