@@ -11,6 +11,19 @@ By: Brady & Gabby
 
 ---
 
+## Repo Layout
+- `frontend/` Vite + React app
+- `server/` Express + Sequelize API
+- `server/.env` for database connection
+
+## Local Dev
+1. `cd server`
+2. `npm install`
+3. `npm run dev`
+4. `cd ../frontend`
+5. `npm install`
+6. `npm run dev`
+
 **Problem Statement:** What traits do each of the species in the Sonic series have? How can I make a fan-character look accurate to it's species if I can't find *official* references among all the other fan-characters? Are there *official* characters that are (Species Name)?  
 **Users:** Sonic (2-D and 3-D) Fan-Artists.  
 
@@ -96,4 +109,21 @@ The total *unofficial* collection of traits of every species in the Sonic series
                                      /       \             |
                                       ReUsable      ←      |
                                        Cards
+```
+
+## Notes: Running Frontend + Server
+Run each in a separate terminal.
+
+Frontend:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Server:
+```bash
+cd server
+npm install
+npm run dev
 ```
