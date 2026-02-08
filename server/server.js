@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import sequelize from "./db/connection.js";
 import router from "./routes/router.js";
+import "./models/species.schema.js";
+import "./models/trait.schema.js";
+import "./models/speciesTrait.schema.js";
 
 
 const app = express();
