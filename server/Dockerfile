@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-Copy package*.json ./
+COPY package*.json ./
 RUN npm i
 
 COPY . .
