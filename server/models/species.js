@@ -1,27 +1,27 @@
 const species = [
     {
         "id": 1,
-        "name": "hedgehog",
+        "name": "Hedgehog",
         "description": ""
     },
     {
         "id": 2,
-        "name": "fox",
+        "name": "Fox",
         "description": ""
     },
     {
         "id": 3,
-        "name": "echidna",
+        "name": "Echidna",
         "description": ""
     },
     {
         "id": 4,
-        "name": "cat",
+        "name": "Cat",
         "description": ""
     },
     {
         "id": 5,
-        "name": "bird",
+        "name": "Bird",
         "description": ""
     },
     {
@@ -31,7 +31,7 @@ const species = [
     },
     {
         "id": 7,
-        "name": "wolf",
+        "name": "Wolf",
         "description": ""
     }
 ];
