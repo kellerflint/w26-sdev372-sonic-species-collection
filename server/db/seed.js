@@ -111,10 +111,13 @@ const speciesTraits = {
 
 const speciesRecords = [];
 for (const specie of speciesData) {
-  const [record] = await Species.findOrCreate({
+  const [record, created] = await Species.findOrCreate({
     where: { name: specie.name },
     defaults: specie,
   });
+  if (!created && record.name !== specie.name) {
+    await record.update({ name: specie.name });
+  }
   speciesRecords.push(record);
 }
 
