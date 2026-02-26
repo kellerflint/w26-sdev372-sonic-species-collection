@@ -1,7 +1,10 @@
 import speciesData from "../models/species.js";
+import sequelize from "./connection.js";
 import Species from "../models/species.schema.js";
 import Trait from "../models/trait.schema.js";
 import SpeciesTrait from "../models/speciesTrait.schema.js";
+
+await sequelize.sync();
 
 const traits = [
   "No Ears",
