@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import CharacterStrip from "../components/CharacterStrip";
 import styles from "./SpeciesPage.module.css";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "";
 
 export default function SpeciesPage() {
     const [species, setSpecies] = useState([]);
