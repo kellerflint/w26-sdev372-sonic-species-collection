@@ -3,9 +3,11 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
     ports:
-      - "3306:3306"
+      - "${DB_HOST_PORT:-3307}:3306"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -14,21 +16,7 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
-
-  seed:
-    build: ./server
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DB_HOST: db
-      DB_PORT: 3307
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
-      DB_DIALECT: mysql
-    command: sh -c "node run seed.js"
-    restart: "no"
+    restart: unless-stopped
 
   server:
     build: ./server
@@ -43,8 +31,31 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_DIALECT: mysql
+      CORS_ORIGIN: ${CORS_ORIGIN}
     ports:
       - "3001:3001"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  seed:
+    build: ./server
+    depends_on:
+      server:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_DIALECT: mysql
+    command: npm run seed
+    restart: "no"
 
   frontend:
     build: ./frontend
@@ -52,6 +63,9 @@ services:
       - "5173:5173"
     depends_on:
       - server
+    environment:
+      API_TARGET: http://server:3001
+    restart: unless-stopped
 
 volumes:
   db_data:
