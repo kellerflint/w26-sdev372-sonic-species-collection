@@ -7,7 +7,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
     ports:
-      - "3307:3306"
+      - "${DB_HOST_PORT:-3307}:3306"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -31,8 +31,16 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_DIALECT: mysql
-    command: sh -c "npm run seed"
-    restart: "no"
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
 
   seed:
     build: ./server
