@@ -45,7 +45,7 @@ services:
   seed:
     build: ./server
     depends_on:
-      server:
+      db:
         condition: service_healthy
     environment:
       DB_HOST: db
@@ -57,6 +57,26 @@ services:
     command: npm run seed
     restart: "no"
 
+  server-test:
+    build: ./server
+    depends_on:
+      db:
+        condition: service_healthy
+      seed:
+        condition: service_completed_successfully
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_DIALECT: mysql
+    command: 
+      npm run test
+    restart: "no"
+    # profiles:
+    #   - test
+
   frontend:
     build: ./frontend
     ports:
@@ -66,6 +86,15 @@ services:
     environment:
       API_TARGET: http://server:3001
     restart: unless-stopped
+
+  frontend-test:
+    build: ./frontend
+    depends_on:
+      - frontend
+    command: npm run test
+    restart: "no"
+    # profiles:
+    #   - test
 
 volumes:
   db_data:

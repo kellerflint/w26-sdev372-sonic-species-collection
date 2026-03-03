@@ -128,3 +128,23 @@ npm install
 npm run seed
 npm run dev
 ```
+
+## Docker: Seed then Run Integration Tests
+
+From the project root, run:
+
+```bash
+docker compose --profile test up --build --abort-on-container-exit --exit-code-from server-test server-test
+```
+
+This starts `db`, runs `seed`, and then runs `server-test` (`npm run test:integration`).
+
+## Docker: Frontend Tests
+
+From the project root, run:
+
+```bash
+docker compose --profile test up --build --abort-on-container-exit --exit-code-from frontend-test frontend-test
+```
+
+This runs only `frontend-test` (`npm run test`) in Docker.
