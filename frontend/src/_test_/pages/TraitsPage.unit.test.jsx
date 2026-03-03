@@ -18,7 +18,7 @@ describe('TraitsPage unit', () => {
 		expect(screen.getByText(/Select a trait to see which species have it\./i)).toBeInTheDocument();
 
 		await waitFor(() => {
-			expect(global.fetch).toHaveBeenCalledWith('http://localhost:3001/api/traits');
+			expect(global.fetch).toHaveBeenCalledWith('/api/traits');
 		});
 	});
 });

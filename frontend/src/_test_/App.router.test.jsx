@@ -3,7 +3,7 @@ import App from '../App';
 
 describe('App routing', () => {
 	it('renders the home page route', () => {
-		window.history.pushState({}, '', '/w26-sdev372-sonic-species-collection/');
+		window.history.pushState({}, '', '/');
 		render(<App />);
 		expect(screen.getByText(/SONIC SPECIES COLLECTION/i)).toBeInTheDocument();
 	});
