@@ -1,10 +1,10 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: "./e2e",
   use: {
-    baseURL: 'http://frontend:5173',
+    baseURL: process.env.BASE_URL || "http://frontend:5173",
     headless: true,
-    trace: 'retain-on-failure',
+    trace: "retain-on-failure",
   },
 });
