@@ -7,7 +7,7 @@ export default function HomePage() {
         <div className={styles.page}>
             <header className={styles.header}>
                 <img
-                    src={`${import.meta.env.BASE_URL}images/Sonic.png`}
+                    src={`${import.meta.env.BASE_URL}images/Sonic.webp`}
                     alt="Sonic the Hedgehog"
                     className={styles.sonicImg}
                 />

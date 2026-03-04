@@ -16,7 +16,7 @@ export default function CharacterStrip() {
             {characters.map((name) => (
                 <img
                     key={name}
-                    src={`${import.meta.env.BASE_URL}images/${name}.png`}
+                    src={`${import.meta.env.BASE_URL}images/${name}.webp`}
                     alt={name}
                     className={styles.img}
                 />
