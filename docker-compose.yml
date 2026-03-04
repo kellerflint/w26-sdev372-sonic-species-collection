@@ -71,8 +71,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_DIALECT: mysql
-    command: 
-      npm run test
+    command: npm run test
     restart: "no"
     # profiles:
     #   - test
