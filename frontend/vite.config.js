@@ -11,6 +11,7 @@ export default defineConfig({
     setupFiles: "./src/_test_/setupTests.js",
   },
   server: {
+    allowedHosts: true,
     proxy: {
       "/api": {
         target: process.env.API_TARGET || "http://localhost:3001",

@@ -73,8 +73,6 @@ services:
       DB_DIALECT: mysql
     command: npm run test
     restart: "no"
-    # profiles:
-    #   - test
 
   frontend:
     build: ./frontend
@@ -84,6 +82,12 @@ services:
       - server
     environment:
       API_TARGET: http://server:3001
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5173/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     restart: unless-stopped
 
   frontend-test:
@@ -92,8 +96,17 @@ services:
       - frontend
     command: npm run test
     restart: "no"
-    # profiles:
-    #   - test
+
+  playwright-test:
+    build: ./playwright
+    depends_on:
+      frontend:
+        condition: service_healthy
+      server:
+        condition: service_healthy
+      seed:
+        condition: service_completed_successfully
+    restart: "no"
 
 volumes:
   db_data:
