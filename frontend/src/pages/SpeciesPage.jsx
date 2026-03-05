@@ -43,7 +43,7 @@ export default function SpeciesPage() {
             <Link to="/" className={styles.back}>← Back</Link>
 
             <img
-                src={`${import.meta.env.BASE_URL}images/Sonic.png`}
+                src={`${import.meta.env.BASE_URL}images/Sonic.webp`}
                 alt="Sonic the Hedgehog"
                 className={styles.sonicImg}
             />
