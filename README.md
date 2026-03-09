@@ -1,22 +1,26 @@
 By: Brady & Gabby
 
-# Project Overview  
-**Name:** Sonic Species Collection  
-**Tagline:** The total *unofficial* collection of traits of every species in the Sonic series  
+# Project Overview
 
-**To-Do:** 
+**Name:** Sonic Species Collection  
+**Tagline:** The total _unofficial_ collection of traits of every species in the Sonic series
+
+**To-Do:**
+
 - Add traits to database
 - Make call to database to display traits of species using the dropdown  
-[Trait list](https://github.com/Gabby-Moon/w26-sdev372-sonic-species-collection/blob/main/NOTES.md)
+  [Trait list](https://github.com/Gabby-Moon/w26-sdev372-sonic-species-collection/blob/main/NOTES.md)
 
 ---
 
 ## Repo Layout
+
 - `frontend/` Vite + React app
 - `server/` Express + Sequelize API
 - `server/.env` for database connection
 
 ## Local Dev
+
 1. `cd server`
 2. `npm install`
 3. `npm run dev`
@@ -24,40 +28,28 @@ By: Brady & Gabby
 5. `npm install`
 6. `npm run dev`
 
-**Problem Statement:** What traits do each of the species in the Sonic series have? How can I make a fan-character look accurate to it's species if I can't find *official* references among all the other fan-characters? Are there *official* characters that are (Species Name)?  
-**Users:** Sonic (2-D and 3-D) Fan-Artists.  
+**Problem Statement:** What traits do each of the species in the Sonic series have? How can I make a fan-character look accurate to it's species if I can't find _official_ references among all the other fan-characters? Are there _official_ characters that are (Species Name)?  
+**Users:** Sonic (2-D and 3-D) Fan-Artists.
 
-## Features  
-**MVP:** A database of species and corelating traits. An API to read the database. A page with a dropdown list of species that then shows a list of common traits for that species (possibly with photos).  
-*EX:*  
-Species: Wolf  
-Traits:
-- Sharp Ears
-- Separated Eyes
-- Visible Fangs
-- Longer Fluff on Sides of Face
-- Little to No Pattern
-- Long Tail
-- Fluffy Tail
-- Long muzzle
-- Long Nose (Male)
-- Short Triangle Nose (Female)
+## Features
 
+**MVP:** A database of species and correlating traits. An API to read the database. A page with a dropdown list of species that then shows a list of common traits for that species.
 
-**Extended:**  Photos if not implemented. Showing all traits in groups. Showing official characters that have the traits or group of traits to their species.  
-*Character Ex. using markdown:* ![Gadget the Wolf, A red bipedal wolf character, trying on red shoes. Has the Sonic Channel watermark in the bottom left corner.](https://static.wikia.nocookie.net/sonic/images/e/e2/SonicChannelDecember2025CommemorativeArtwork.jpeg/revision/latest?cb=20251224104314)  
-Wolf Traits shown: Sharp ears. Eyes separated. Visible fang(s). Longer fluff on sides of face. Longer & fluffier tail. Long muzzle. Long nose (Male).
+**Extended:** Photos for traits. Showing all traits in groups. Showing official characters that have the traits or group of traits to their species.
 
-## Data Model  
-**Core:** Multiple tables in a data set with connecter tables. Tables for species `(KEY INT, STRING species_name)`, traits `(KEY INT, STRING trait_name, STRING trait_description, FOREIGN KEY INT species)`, Official characters `(STRING character_name, FOREIGN KEY INT species, FOREIGN KEY LIST INT traits, BOOLEAN is_common)`, Images for traits `(KEY INT, LIST STRING images_url, FOREIGN KEY INT trait)`.  
-Relationships: Each table connect to one another through foreign keys, connecting the images to traits, traits to species, and characters to species and traits.
+## Data Model
 
-## User Experience  
-**Flows:** Users would pick a species they want to see the traits of and it would show the traits, or they could pick a trait and see what species have that trait. It could show pictures to give a visual if the user would benefit from visual references.  
-**Sketches:** Sketch will be in ascii art due to file limitations and no proper way to upload image.  
+- **Species** – `id`, `name`, `description`
+- **Trait** – `id`, `name`, `description`
+- **SpeciesTrait** – junction table linking species and traits (many-to-many)
+
+## User Experience
+
+Users pick a species to see its traits, or pick a trait to see which species have it.
+
 ```
-                            **Sonic Species Collection**
-The total *unofficial* collection of traits of every species in the Sonic series  
+                            Sonic Species Collection
+The total *unofficial* collection of traits of every species in the Sonic series
 ---------------------------------------------------------------------------------
 
                                 Search By Species
@@ -68,7 +60,7 @@ The total *unofficial* collection of traits of every species in the Sonic series
                                     | Tenrec       |
                                     | Cat          |
                                     ----------------
-                            
+
                                 [Species] Traits
         -----------     -------------     -------------     ------------
         |         |     |           |     |           |     |          |
@@ -87,8 +79,8 @@ The total *unofficial* collection of traits of every species in the Sonic series
                                      | Pointed Nose |
                                      | Shell        |
                                      ----------------
-                            
-                                [Species] Traits
+
+                              Species with: [Trait]
         -----------     -------------     -------------     ------------
         |         |     |           |     |           |     |          |
         |         |     |           |     |           |     |          |
@@ -111,20 +103,75 @@ The total *unofficial* collection of traits of every species in the Sonic series
                                        Cards
 ```
 
-## Notes: Running Frontend + Server
-Run each in a separate terminal.
+---
 
-Frontend:
+## Tests
+
+### Unit
+
+| Location               | Framework                | File                        | Tests |
+| ---------------------- | ------------------------ | --------------------------- | ----- |
+| `frontend/src/_test_/` | Vitest + Testing Library | `App.router.test.jsx`       | 1     |
+| `frontend/src/_test_/` | Vitest + Testing Library | `Card.test.jsx`             | 3     |
+| `frontend/src/_test_/` | Vitest + Testing Library | `CharacterStrip.test.jsx`   | 1     |
+| `frontend/src/_test_/` | Vitest + Testing Library | `Dropdown.test.jsx`         | 3     |
+| `frontend/src/_test_/` | Vitest + Testing Library | `SpeciesPage.unit.test.jsx` | 1     |
+| `frontend/src/_test_/` | Vitest + Testing Library | `TraitsPage.unit.test.jsx`  | 1     |
+| `server/tests/`        | Vitest + Supertest       | `router.test.js`            | 13    |
+
+### Integration
+
+| Location                     | Framework                  | File                               | Tests |
+| ---------------------------- | -------------------------- | ---------------------------------- | ----- |
+| `frontend/src/_test_/pages/` | Vitest + Testing Library   | `SpeciesPage.integration.test.jsx` | 1     |
+| `frontend/src/_test_/pages/` | Vitest + Testing Library   | `TraitsPage.integration.test.jsx`  | 1     |
+| `server/tests/`              | Vitest + Supertest + MySQL | `router.integration.test.js`       | 5     |
+
+### E2E
+
+| Location          | Framework  | File          | Tests |
+| ----------------- | ---------- | ------------- | ----- |
+| `playwright/e2e/` | Playwright | `app.spec.js` | 2     |
+
+---
+
+## Running Tests
+
+### Locally
+
+**Frontend tests:**
+
 ```bash
 cd frontend
 npm install
-npm run dev
+npm test
 ```
 
-Server:
+**Server tests:**
+
 ```bash
 cd server
 npm install
-npm run seed
-npm run dev
+npm test
 ```
+
+> Server integration tests require a running MySQL database configured in `server/.env`.
+
+**Playwright E2E tests:**
+
+```bash
+cd playwright
+npm install
+npx playwright install
+npx playwright test
+```
+
+> Requires frontend and server to be running. Update `baseURL` in `playwright/playwright.config.js` for local use (default is `http://frontend:5173` for Docker).
+
+### With Docker
+
+```bash
+docker compose up --build
+```
+
+This runs all services and all tests. Results appear in the output.

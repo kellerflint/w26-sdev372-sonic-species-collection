@@ -1,0 +1,17 @@
+.strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 0 0;
+    border-top: 0.125rem solid #ffce24;
+    margin-top: auto;
+}
+
+.img {
+    height: 10rem;
+    width: auto;
+    object-fit: contain;
+}

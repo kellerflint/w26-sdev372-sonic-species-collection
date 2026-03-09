@@ -6,22 +6,18 @@ import "./models/species.schema.js";
 import "./models/trait.schema.js";
 import "./models/speciesTrait.schema.js";
 
-
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
+app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 app.use('/', router);
 
-
+app.get('/health', (_req, res) => res.sendStatus(200));
 
 const PORT = process.env.API_PORT || 3001;
 
-
-
-app.listen(PORT, async () => {
-    console.log(`API running on port ${PORT}`)
-    await sequelize.authenticate();
-    await sequelize.sync();
-    console.log("Connected to MYSQL DB!")
-})
+await sequelize.sync();
+app.listen(PORT, () => {
+    console.log(`API running on port ${PORT}`);
+});

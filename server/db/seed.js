@@ -1,7 +1,10 @@
 import speciesData from "../models/species.js";
+import sequelize from "./connection.js";
 import Species from "../models/species.schema.js";
 import Trait from "../models/trait.schema.js";
 import SpeciesTrait from "../models/speciesTrait.schema.js";
+
+await sequelize.sync();
 
 const traits = [
   "No Ears",
@@ -111,10 +114,13 @@ const speciesTraits = {
 
 const speciesRecords = [];
 for (const specie of speciesData) {
-  const [record] = await Species.findOrCreate({
+  const [record, created] = await Species.findOrCreate({
     where: { name: specie.name },
     defaults: specie,
   });
+  if (!created && record.name !== specie.name) {
+    await record.update({ name: specie.name });
+  }
   speciesRecords.push(record);
 }
 
