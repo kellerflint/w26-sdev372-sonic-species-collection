@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose run --rm server npm test
+
+  frontend-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --target build -t client-test ./frontend
+      - run: docker run --rm client-test npm test
+
+  # integration:
+  #   needs: [backend-unit, frontend-unit]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: docker compose run --rm server npm run test:integration
+
+  e2e:
+    needs: [backend-unit, frontend-unit]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up -d --build
+      - run: |
+          echo "Waiting for app to be ready..."
+          for i in $(seq 1 30); do
+            curl -s http://localhost:5173 > /dev/null && break
+            sleep 2
+          done
+      - run: docker build -t playwright-test ./playwright
+      - run: docker run --rm --network w26-sdev372-sonic-species-collection_default -e BASE_URL=http://frontend:5173 playwright-test
+      - run: docker compose down
+        if: always()
