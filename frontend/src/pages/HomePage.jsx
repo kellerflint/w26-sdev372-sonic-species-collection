@@ -36,6 +36,10 @@ export default function HomePage() {
                     <h2>Add a Trait</h2>
                     <p>Add a new trait to the collection</p>
                 </Link>
+                <Link to="/manage" className={styles.navCard}>
+                    <h2>Manage</h2>
+                    <p>Delete existing species and traits</p>
+                </Link>
             </nav>
             <CharacterStrip />
         </div>
