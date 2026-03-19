@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import styles from "./ManageDeletePage.module.css";
+import styles from "./ManagePage.module.css";
 
 const API_URL = "";
 
