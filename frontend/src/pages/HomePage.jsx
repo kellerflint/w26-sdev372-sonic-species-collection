@@ -24,9 +24,25 @@ export default function HomePage() {
                     <h2>Search by Species</h2>
                     <p>Pick a species and see all of its defining traits</p>
                 </Link>
+                <Link to="/link" className={styles.navCard}>
+                    <h2>Link Traits</h2>
+                    <p>Assign traits to a species</p>
+                </Link>
                 <Link to="/traits" className={styles.navCard}>
                     <h2>Search by Trait</h2>
                     <p>Pick a trait and see which species share it</p>
+                </Link>
+                <Link to="/species/add" className={styles.navCard}>
+                    <h2>Add a Species</h2>
+                    <p>Add a new species to the collection</p>
+                </Link>
+                <Link to="/manage" className={styles.navCard}>
+                    <h2>Manage</h2>
+                    <p>Delete and update existing species and traits</p>
+                </Link>
+                <Link to="/trait/add" className={styles.navCard}>
+                    <h2>Add a Trait</h2>
+                    <p>Add a new trait to the collection</p>
                 </Link>
             </nav>
             <CharacterStrip />
