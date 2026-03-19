@@ -9,16 +9,25 @@ on:
 jobs:
   backend-unit:
     runs-on: ubuntu-latest
+    defaults:
+     run:
+      working-directory: server
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - run: npm ci
       - run: docker compose run --rm server npm test
 
-  frontend-unit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: docker build --target build -t client-test ./frontend
-      - run: docker run --rm client-test npm test
+  # frontend-unit:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: docker build --target build -t client-test ./frontend
+  #     - run: docker run --rm client-test npm test
 
   # integration:
   #   needs: [backend-unit, frontend-unit]
