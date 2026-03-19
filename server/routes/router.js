@@ -1,7 +1,7 @@
 import { Router } from "express";
 // import Species from "../models/species.schema.js";
 // import Trait from "../models/trait.schema.js";
-import { getAllSpecies, getSpeciesByName, getTraitForSpecies, createSpecies, updateSpecies, deleteSpecies } from "../controller/species.controller.js";
+import { getAllSpecies, getSpeciesByName, getTraitForSpecies, createSpecies, updateSpecies, deleteSpecies, linkTraitToSpecies } from "../controller/species.controller.js";
 import { getAllTraits, getSpeciesByTrait, createTrait, updateTrait, deleteTrait } from "../controller/trait.controller.js";
 
 const router = Router();
@@ -67,6 +67,17 @@ router.put("/api/species/:id", async (req, res) => {
     const updated = await updateSpecies(id, req.body);
     if (!updated) return res.status(404).json({ error: "Species not found" });
     res.json(updated);
+});
+
+router.post("/api/species/:speciesId/traits/:traitId", async (req, res) => {
+    const { speciesId, traitId } = req.params;
+    try {
+        const result = await linkTraitToSpecies(speciesId, traitId);
+        if (!result) return res.status(404).json({ error: "Species or trait not found" });
+        res.json({ success: true });
+    } catch {
+        res.status(500).json({ error: "Failed to link trait to species" });
+    }
 });
 
 // Trait routes
