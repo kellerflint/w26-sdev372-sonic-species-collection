@@ -9,6 +9,8 @@ export default function ManagePage() {
     const [species, setSpecies] = useState([]);
     const [traits, setTraits] = useState([]);
     const [error, setError] = useState("");
+    const [editId, setEditId] = useState(null);
+    const [editName, setEditName] = useState("");
 
     useEffect(() => {
         fetch(`${API_URL}/api/all`)
@@ -50,6 +52,41 @@ export default function ManagePage() {
         }
     };
 
+    const handleUpdateSpecies = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/api/species/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: editName }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            setSpecies((prev) => prev.map((s) => s.id === id ? { ...s, name: editName } : s));
+            setEditId(null);
+            setEditName("");
+        } catch (err) {
+            setError(err.message || "Failed to update species.");
+        }
+    };
+
+    const handleUpdateTrait = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/api/traits/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: editName }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            setTraits((prev) => prev.map((t) => t.id === id ? { ...t, name: editName } : t));
+            setEditId(null);
+            setEditName("");
+        } catch (err) {
+            setError(err.message || "Failed to update trait.");
+        }
+    };
+
+    const handleUpdate = tab === "species" ? handleUpdateSpecies : handleUpdateTrait;
     const activeList = tab === "species" ? species : traits;
     const handleDelete = tab === "species" ? handleDeleteSpecies : handleDeleteTrait;
 
@@ -79,13 +116,48 @@ export default function ManagePage() {
             <ul className={styles.list}>
                 {activeList.map((item) => (
                     <li key={item.id} className={styles.item}>
-                        <span className={styles.name}>{item.name}</span>
-                        <button
-                            className={styles.deleteBtn}
-                            onClick={() => handleDelete(item.id)}
-                        >
-                            Delete
-                        </button>
+                        {editId === item.id ? (
+                            <>
+                                <input
+                                    className={styles.input}
+                                    value={editName}
+                                    onChange={(e) => setEditName(e.target.value)}
+                                />
+                                <div className={styles.actions}>
+                                    <button
+                                        className={styles.saveBtn}
+                                        onClick={() => handleUpdate(item.id)}
+                                        disabled={!editName.trim()}
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        className={styles.cancelBtn}
+                                        onClick={() => { setEditId(null); setEditName(""); }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <span className={styles.name}>{item.name}</span>
+                                <div className={styles.actions}>
+                                    <button
+                                        className={styles.editBtn}
+                                        onClick={() => { setEditId(item.id); setEditName(item.name); }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className={styles.deleteBtn}
+                                        onClick={() => handleDelete(item.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </li>
                 ))}
             </ul>
