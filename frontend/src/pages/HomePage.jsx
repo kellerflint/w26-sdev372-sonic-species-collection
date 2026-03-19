@@ -28,6 +28,10 @@ export default function HomePage() {
                     <h2>Search by Trait</h2>
                     <p>Pick a trait and see which species share it</p>
                 </Link>
+                <Link to="/species/add" className={styles.navCard}>
+                    <h2>Add a Species</h2>
+                    <p>Add a new species to the collection</p>
+                </Link>
             </nav>
             <CharacterStrip />
         </div>
