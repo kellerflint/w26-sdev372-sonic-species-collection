@@ -46,6 +46,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker compose up -d --build
+      - name: Show seed logs
+        if: always()
+        run: docker compose logs seed
       - run: |
           echo "Waiting for app to be ready..."
           for i in $(seq 1 30); do
