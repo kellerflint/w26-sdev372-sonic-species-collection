@@ -1,0 +1,61 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    env:
+      DB_USER: testuser
+      DB_PASSWORD: testpassword
+      DB_NAME: testdb
+      CORS_ORIGIN: http://localhost:5173
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run migrations and seed
+        run: docker compose run --rm seed
+      - name: Run tests
+        run: docker compose run --rm server npm test
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --target build -t client-test ./frontend
+      - run: docker run --rm client-test npm test
+
+  # integration:
+  #   needs: [backend-unit, frontend-unit]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: docker compose run --rm server npm run test:integration
+
+  e2e:
+    needs: [backend-tests, frontend-tests]
+    runs-on: ubuntu-latest
+    env:
+      DB_USER: testuser
+      DB_PASSWORD: testpassword
+      DB_NAME: testdb
+      CORS_ORIGIN: http://localhost:5173
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up -d --build
+      - name: Show seed logs
+        if: always()
+        run: docker compose logs seed
+      - run: |
+          echo "Waiting for app to be ready..."
+          for i in $(seq 1 30); do
+            curl -s http://localhost:5173 > /dev/null && break
+            sleep 2
+          done
+      - run: docker build -t playwright-test ./playwright
+      - run: docker run --rm --network w26-sdev372-sonic-species-collection_default -e BASE_URL=http://frontend:5173 playwright-test
+      - run: docker compose down
+        if: always()
