@@ -27,4 +27,9 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
-            docker compose up --build -d
+            docker compose build db server frontend seed
+            docker compose up --build -d \
+              --scale playwright-test=0 \
+              --scale server-test=0 \
+              --scale frontend-test=0 \
+              --scale seed=1
